@@ -8,7 +8,7 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 
 
-internal class SongsAdapter(private var songsList: List<Song>) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
+internal class SongsAdapter(private var songsList: List<Song>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var songName: TextView = view.findViewById(R.id.songName)
         var capo: TextView = view.findViewById(R.id.capo)
@@ -24,6 +24,10 @@ internal class SongsAdapter(private var songsList: List<Song>) : RecyclerView.Ad
         val song = songsList[position]
         holder.songName.text = song.getSongName()
         holder.capo.text = song.getCapo().toString()
+
+        holder.itemView.setOnClickListener {
+            cellClickListener.onCellClickListener()
+        }
     }
 
     override fun getItemCount(): Int {

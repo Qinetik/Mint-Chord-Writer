@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".EditActivity">
 
+    <ImageView
+        android:id="@+id/guitarPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/guitar_panel"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

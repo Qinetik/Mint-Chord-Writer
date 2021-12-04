@@ -6,13 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".EditActivity">
 
+    <Button
+        android:id="@+id/editToMain"
+        style="@style/Theme.MintButton"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:text="Home"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
     <ImageView
         android:id="@+id/guitarPanel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/guitar_panel"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_width="340dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:srcCompat="@drawable/guitar_panel_h"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

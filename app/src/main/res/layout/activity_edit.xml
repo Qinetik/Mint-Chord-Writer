@@ -15,21 +15,21 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/guitarPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1" />
 
     <ImageView
         android:id="@+id/guitarPanel"
-        android:layout_width="340dp"
-        android:layout_height="270dp"
+        android:layout_width="429dp"
+        android:layout_height="306dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.40"
         app:srcCompat="@drawable/guitar_panel_h"
         tools:ignore="MissingConstraints" />
 

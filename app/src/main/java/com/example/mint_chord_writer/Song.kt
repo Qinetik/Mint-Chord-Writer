@@ -1,23 +1,13 @@
 package com.example.mint_chord_writer
 
-class Song(capo: Int, name: String) {
-    private var songName: String = name
-    private var capo: Int = capo
+data class Song(var name: String, var capo: Int = 0) {
     private var chords: ArrayList<Chord> = arrayListOf<Chord>()
 
     fun getSongName(): String {
-        return songName
+        return name
     }
 
     fun setSongName(name: String) {
-        this.songName = name
-    }
-
-    fun getCapo(): Int {
-        return capo
-    }
-
-    fun setCapo(capo: Int) {
-        this.capo = capo
+        this.name = name
     }
 }

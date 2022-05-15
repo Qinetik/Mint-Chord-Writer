@@ -1,4 +1,4 @@
-package com.example.mint_chord_writer
+package com.minthana.mint_chord_writer
 
 
 class GString(finger: Finger, fret: Int) {

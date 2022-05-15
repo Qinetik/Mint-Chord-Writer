@@ -1,16 +1,20 @@
-package com.example.mint_chord_writer
+package com.minthana.mint_chord_writer
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_edit.view.*
+import kotlinx.android.synthetic.main.main_songs_list.view.*
 
-class SongsAdapter(private var songs: MutableList<Song>) : RecyclerView.Adapter<SongsAdapter.SongsViewHolder>() {
-    class SongsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class SongsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val songName = itemView.songName
+}
+
+class SongsAdapter(var songs: ArrayList<Song>) : RecyclerView.Adapter<SongsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsViewHolder {
-        return SongsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.activity_main, parent, false))
+        return SongsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_songs_list, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -18,9 +22,10 @@ class SongsAdapter(private var songs: MutableList<Song>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: SongsViewHolder, position: Int) {
-        val curSong = songs[position]
-        holder.itemView.apply{
-            //songTitle.text = curSong.name
+        holder.songName.text = songs[position].name
+        holder.itemView.setOnClickListener{view ->
+            val intent = Intent(view.context, EditActivity::class.java)
+            view.context.startActivity(intent)
         }
     }
 }

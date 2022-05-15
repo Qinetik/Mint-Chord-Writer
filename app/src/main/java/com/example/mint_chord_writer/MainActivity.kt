@@ -1,16 +1,18 @@
-package com.example.mint_chord_writer
+package com.minthana.mint_chord_writer
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
-import android.widget.ListView
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity(), CellClickListener {
+class MainActivity : AppCompatActivity() {
     private val songList = ArrayList<Song>()
     private lateinit var songsAdapter: SongsAdapter
 
@@ -18,25 +20,19 @@ class MainActivity : AppCompatActivity(), CellClickListener {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val listView: ListView = findViewById(R.id.mainSongList)
+        val songsRecyclerView: RecyclerView = findViewById(R.id.mainSongList)
         songsAdapter = SongsAdapter(songList)
         val layoutManager = LinearLayoutManager(applicationContext)
-        listView.layoutManager = layoutManager
-        listView.itemAnimator = DefaultItemAnimator()
-        listView.adapter = songsAdapter
+        songsRecyclerView.layoutManager = layoutManager
+        songsRecyclerView.itemAnimator = DefaultItemAnimator()
+        songsRecyclerView.adapter = songsAdapter
         tempPrepareSongData()
+        val newSongButton = findViewById<Button>(R.id.mainCreateNew)
 
-        val routineButton = findViewById<Button>(R.id.mainCreateNew)
-
-        routineButton.setOnClickListener{
+        newSongButton.setOnClickListener{
             val intent = Intent(this, EditActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onCellClickListener() {
-        val intent = Intent(this, EditActivity::class.java)
-        startActivity(intent)
     }
 
     private fun tempPrepareSongData() {
@@ -44,5 +40,9 @@ class MainActivity : AppCompatActivity(), CellClickListener {
         songList.add(song)
         song = Song("second Song", 0)
         songList.add(song)
+    }
+
+    fun createNewSong(view: View) {
+        Toast.makeText(this, "newSong will come out", Toast.LENGTH_SHORT).show();
     }
 }

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var songsAdapter: SongsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val songsRecyclerView: RecyclerView = findViewById(R.id.mainSongList)
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         songsRecyclerView.layoutManager = layoutManager
         songsRecyclerView.itemAnimator = DefaultItemAnimator()
         songsRecyclerView.adapter = songsAdapter
+
         tempPrepareSongData()
         val newSongButton = findViewById<Button>(R.id.mainCreateNew)
 

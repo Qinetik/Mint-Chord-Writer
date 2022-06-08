@@ -25,6 +25,7 @@ class SongsAdapter(var songs: ArrayList<Song>) : RecyclerView.Adapter<SongsViewH
         holder.songName.text = songs[position].name
         holder.itemView.setOnClickListener{view ->
             val intent = Intent(view.context, EditActivity::class.java)
+            intent.putExtra("selectedSong", songs[position])
             view.context.startActivity(intent)
         }
     }

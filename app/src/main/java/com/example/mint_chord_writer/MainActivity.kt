@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         newSongButton.setOnClickListener{
             val intent = Intent(this, EditActivity::class.java)
+            val newSong = Song("newSong", 0)
+            intent.putExtra("selectedSong", newSong)
             startActivity(intent)
         }
     }

@@ -1,6 +1,8 @@
 package com.minthana.mint_chord_writer
 
-class Chord() {
+import java.io.Serializable
+
+class Chord() : Serializable {
     private var strings: Array<GString> = arrayOf(GString(Finger.NULL, 0), GString(Finger.NULL, 0), GString(Finger.NULL, 0), GString(Finger.NULL, 0), GString(Finger.NULL, 0), GString(Finger.NULL, 0))
 
     fun getStrings(): Array<GString> {

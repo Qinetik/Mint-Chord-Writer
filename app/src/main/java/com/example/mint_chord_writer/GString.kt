@@ -1,7 +1,9 @@
 package com.minthana.mint_chord_writer
 
+import java.io.Serializable
 
-class GString(finger: Finger, fret: Int) {
+
+class GString(finger: Finger, fret: Int) : Serializable {
     private var finger: Finger = finger
     private var fret: Int = fret
 

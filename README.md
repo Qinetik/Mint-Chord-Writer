@@ -1,4 +1,4 @@
-# Mint Chord Writer
+# Nuri Chord Writer
  An android app for writing guitar chords
 
 

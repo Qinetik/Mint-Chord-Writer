@@ -1,5 +1,5 @@
 package com.minthana.mint_chord_writer
 
 enum class Finger {
-    ONE,TWO,THREE,FOUR,THUMB,MUTE,
+    NULL,ONE,TWO,THREE,FOUR,THUMB,MUTE
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,15 @@ class EditActivity : AppCompatActivity() {
         val chordNum: TextView = findViewById(R.id.chordNum)
         chordNum.text = "1/"+currentSong?.chords?.size
 
+        fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
+            when(i) {
+                R.id.thumbFinger -> println("Thumb")
+                R.id.oneFinger -> println("1")
+                R.id.twoFinger -> println("2")
+                R.id.threeFinger -> println("3")
+                R.id.fourFinger -> println("4")
+            }
+        }
 
         val mainButton = findViewById<Button>(R.id.editToMain)
         mainButton.setOnClickListener{

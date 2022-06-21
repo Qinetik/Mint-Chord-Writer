@@ -1,4 +1,4 @@
-package com.minthana.mint_chord_writer
+package com.example.nuri_chord_writer
 
 import java.io.Serializable
 

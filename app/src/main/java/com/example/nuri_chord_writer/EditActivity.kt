@@ -1,6 +1,5 @@
-package com.minthana.mint_chord_writer
+package com.example.nuri_chord_writer
 
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

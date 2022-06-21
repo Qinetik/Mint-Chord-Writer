@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.minthana.mint_chord_writer"
+        applicationId "com.example.nuri_chord_writer"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

@@ -11,4 +11,5 @@
     <color name="gray">#494949</color>
     <color name="dark_gray">#1E1E1E</color>
     <color name="back_white">#F0FFF5</color>
+    <color name="clear">#00000000</color>
 </resources>

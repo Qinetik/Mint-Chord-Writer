@@ -57,17 +57,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025"/>
 
-    <TextView
+    <EditText
         android:id="@+id/fratNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2nd"
+        android:text="2"
+        android:maxLength="2"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2725"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.95"/>
+
+    <TextView
+        android:id="@+id/fratNumExt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/fratNum"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925" />
 
     <TextView
         android:id="@+id/chordNum"
@@ -211,6 +227,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@null"
+            android:checked="true"
+            android:background="@drawable/finger_selector"
             android:text="T"
             android:textAlignment="center" />
 
@@ -219,6 +237,7 @@
             android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/finger_selector"
             android:text="1"
             android:textAlignment="center"/>
 
@@ -227,6 +246,7 @@
             android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/finger_selector"
             android:text="2"
             android:textAlignment="center"/>
 
@@ -235,6 +255,7 @@
             android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/finger_selector"
             android:text="3"
             android:textAlignment="center"/>
 
@@ -243,6 +264,7 @@
             android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/finger_selector"
             android:text="4"
             android:textAlignment="center"/>
     </RadioGroup>

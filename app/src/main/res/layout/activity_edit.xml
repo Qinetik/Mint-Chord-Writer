@@ -2,8 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editTextLayOut"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".EditActivity">
 
     <Button
@@ -55,35 +59,30 @@
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025"/>
+        app:layout_constraintVertical_bias="0.025" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fratNum"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2"
-        android:maxLength="2"
-        android:background="@null"
-        android:cursorVisible="false"
-        android:inputType="number"
+        app:boxBackgroundMode="outline"
+        app:endIconTint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2725"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"/>
+        app:layout_constraintVertical_bias="1"
+        app:boxStrokeColor="@color/clear">
 
-    <TextView
-        android:id="@+id/fratNumExt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="nd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/fratNum"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textSize="10dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/chordNum"
@@ -102,8 +101,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         android:text="X"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
@@ -118,8 +117,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
@@ -132,8 +131,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
@@ -146,8 +145,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
@@ -160,8 +159,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
@@ -175,22 +174,22 @@
         android:layout_height="40dp"
         android:layout_marginTop="56dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/gray_x"
         android:scaleType="fitCenter"
+        android:src="@drawable/gray_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.845"/>
+        app:layout_constraintVertical_bias="0.845" />
 
     <ImageButton
         android:id="@+id/prevChordButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/left_arrow"
         android:scaleType="fitCenter"
+        android:src="@drawable/left_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
@@ -203,8 +202,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/right_arrow"
         android:scaleType="fitCenter"
+        android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
@@ -218,55 +217,55 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/guitarPanel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.25">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/thumbFinger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/finger_selector"
             android:button="@null"
             android:checked="true"
-            android:background="@drawable/finger_selector"
             android:text="T"
             android:textAlignment="center" />
 
         <RadioButton
             android:id="@+id/oneFinger"
-            android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/finger_selector"
+            android:button="@null"
             android:text="1"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <RadioButton
             android:id="@+id/twoFinger"
-            android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/finger_selector"
+            android:button="@null"
             android:text="2"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <RadioButton
             android:id="@+id/threeFinger"
-            android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/finger_selector"
+            android:button="@null"
             android:text="3"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <RadioButton
             android:id="@+id/fourFinger"
-            android:button="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/finger_selector"
+            android:button="@null"
             android:text="4"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
     </RadioGroup>
 
 

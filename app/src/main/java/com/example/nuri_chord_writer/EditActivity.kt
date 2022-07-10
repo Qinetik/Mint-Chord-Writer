@@ -2,12 +2,15 @@ package com.example.nuri_chord_writer
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import android.widget.TextView
+import android.view.MotionEvent
+import android.view.View
+import android.widget.*
+import androidx.core.graphics.contains
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -24,6 +27,11 @@ class EditActivity : AppCompatActivity() {
         val chordNum: TextView = findViewById(R.id.chordNum)
         chordNum.text = "1/"+currentSong?.chords?.size
 
+        val fratNumItems = listOf("1st", "2nd", "3rd", "4th", "5th")
+        val adapter = ArrayAdapter(this, R.layout.frat_num_item, fratNumItems)
+        fratNum.editText?.setText(fratNumItems[0])
+        (fratNum.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
         fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
             when(i) {
                 R.id.thumbFinger -> println("T")
@@ -34,6 +42,18 @@ class EditActivity : AppCompatActivity() {
             }
         }
 
+
+
+        fratNum.setOnFocusChangeListener { _ , hasFocus: Boolean ->
+            println("what happening here?")
+            if (hasFocus) {
+                println("focus? how does this work")
+            } else {
+                println("focus lost")
+            }
+        }
+
+        /*
         fratNum.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 println("Text Changed: $s")
@@ -57,12 +77,17 @@ class EditActivity : AppCompatActivity() {
                     println("setting it back to default")
                 }
             }
-        })
+        })*/
 
         val mainButton = findViewById<Button>(R.id.editToMain)
         mainButton.setOnClickListener{
             finish();
         }
+    }
+
+    override fun onBackPressed() {
+        println("back press")
+        editTextLayOut.requestFocus()
     }
 
     override fun onDestroy() {

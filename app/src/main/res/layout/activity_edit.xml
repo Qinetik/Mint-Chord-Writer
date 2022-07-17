@@ -19,21 +19,21 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/guitarPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1" />
 
     <ImageView
         android:id="@+id/guitarPanel"
-        android:layout_width="430dp"
-        android:layout_height="300dp"
+        android:layout_width="400dp"
+        android:layout_height="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.150"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.494"
+        app:layout_constraintVertical_bias="0.10"
         app:srcCompat="@drawable/guitar_panel_h"
         tools:ignore="MissingConstraints" />
 
@@ -44,8 +44,8 @@
         android:text="Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.40"
-        app:layout_constraintStart_toEndOf="@+id/editToMain"
+        app:layout_constraintHorizontal_bias="0.80"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
@@ -56,25 +56,25 @@
         android:text="Capo: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fratNum"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/ClearDropDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/clear"
         app:endIconTint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2725"
+        app:layout_constraintHorizontal_bias="0.20575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1"
-        app:boxStrokeColor="@color/clear">
+        app:layout_constraintVertical_bias="1">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
@@ -91,10 +91,10 @@
         android:text="1/1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.845"
+        app:layout_constraintHorizontal_bias="0.80"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.95" />
 
     <ImageButton
         android:id="@+id/string6MuteButton"
@@ -104,27 +104,26 @@
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
         android:text="X"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
 
     <ImageButton
         android:id="@+id/string5MuteButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.1275" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
 
     <ImageButton
         android:id="@+id/string4MuteButton"
@@ -133,12 +132,12 @@
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.33" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975"  />
 
     <ImageButton
         android:id="@+id/string3MuteButton"
@@ -147,12 +146,12 @@
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.5125" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58"  />
 
     <ImageButton
         android:id="@+id/string2MuteButton"
@@ -161,27 +160,26 @@
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.6975" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675"  />
 
     <ImageButton
         android:id="@+id/string1MuteButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="56dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_x"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toStartOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editToMain"
-        app:layout_constraintVertical_bias="0.845" />
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
 
     <ImageButton
         android:id="@+id/prevChordButton"
@@ -192,10 +190,10 @@
         android:src="@drawable/left_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="@+id/editToMain"
+        app:layout_constraintHorizontal_bias="0.70"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.995" />
 
     <ImageButton
         android:id="@+id/nextChordButton"
@@ -206,10 +204,10 @@
         android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="@+id/editToMain"
+        app:layout_constraintHorizontal_bias="0.90"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.995" />
 
     <RadioGroup
         android:id="@+id/fingerSelection"
@@ -268,5 +266,94 @@
             android:textAlignment="center" />
     </RadioGroup>
 
+    <Button
+        android:id="@+id/finger00"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
+
+    <Button
+        android:id="@+id/finger01"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
+
+    <Button
+        android:id="@+id/finger02"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975" />
+
+    <Button
+        android:id="@+id/finger03"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <Button
+        android:id="@+id/finger04"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675" />
+
+    <Button
+        android:id="@+id/finger05"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="O"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

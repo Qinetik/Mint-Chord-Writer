@@ -267,7 +267,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/finger00"
+        android:id="@+id/finger0_0"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -282,7 +282,83 @@
         app:layout_constraintVertical_bias="0.0325" />
 
     <Button
-        android:id="@+id/finger01"
+        android:id="@+id/finger0_1"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
+
+    <Button
+        android:id="@+id/finger0_2"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
+
+    <Button
+        android:id="@+id/finger0_3"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
+
+    <Button
+        android:id="@+id/finger0_4"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.0325" />
+
+
+    <Button
+        android:id="@+id/finger1_0"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
+
+    <Button
+        android:id="@+id/finger1_1"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -297,7 +373,82 @@
         app:layout_constraintVertical_bias="0.2175" />
 
     <Button
-        android:id="@+id/finger02"
+        android:id="@+id/finger1_2"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
+
+    <Button
+        android:id="@+id/finger1_3"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
+
+    <Button
+        android:id="@+id/finger1_4"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.2175" />
+
+    <Button
+        android:id="@+id/finger2_0"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975" />
+
+    <Button
+        android:id="@+id/finger2_1"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975" />
+
+    <Button
+        android:id="@+id/finger2_2"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -312,7 +463,82 @@
         app:layout_constraintVertical_bias="0.3975" />
 
     <Button
-        android:id="@+id/finger03"
+        android:id="@+id/finger2_3"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975" />
+
+    <Button
+        android:id="@+id/finger2_4"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.3975" />
+
+    <Button
+        android:id="@+id/finger3_0"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <Button
+        android:id="@+id/finger3_1"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <Button
+        android:id="@+id/finger3_2"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <Button
+        android:id="@+id/finger3_3"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -327,7 +553,82 @@
         app:layout_constraintVertical_bias="0.58" />
 
     <Button
-        android:id="@+id/finger04"
+        android:id="@+id/finger3_4"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <Button
+        android:id="@+id/finger4_0"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675" />
+
+    <Button
+        android:id="@+id/finger4_1"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675" />
+
+    <Button
+        android:id="@+id/finger4_2"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675" />
+
+    <Button
+        android:id="@+id/finger4_3"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.7675" />
+
+    <Button
+        android:id="@+id/finger4_4"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -342,7 +643,67 @@
         app:layout_constraintVertical_bias="0.7675" />
 
     <Button
-        android:id="@+id/finger05"
+        android:id="@+id/finger5_0"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
+
+    <Button
+        android:id="@+id/finger5_1"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.30"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
+
+    <Button
+        android:id="@+id/finger5_2"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
+
+    <Button
+        android:id="@+id/finger5_3"
+        style="@style/Theme.FingerButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@drawable/finger_circle"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
+        app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintVertical_bias="0.9525" />
+
+    <Button
+        android:id="@+id/finger5_4"
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"

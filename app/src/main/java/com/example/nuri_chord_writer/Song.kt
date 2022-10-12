@@ -12,4 +12,8 @@ data class Song(var name: String, var capo: Int = 0) : Serializable {
     fun addNewChord() {
         this.chords.add(Chord())
     }
+
+    override fun toString(): String {
+        return name
+    }
 }

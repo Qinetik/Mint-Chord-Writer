@@ -28,14 +28,6 @@ class MainActivity : AppCompatActivity() {
         songsRecyclerView.adapter = songsAdapter
 
         tempPrepareSongData()
-        val newSongButton = findViewById<Button>(R.id.mainCreateNew)
-
-        newSongButton.setOnClickListener{
-            val intent = Intent(this, EditActivity::class.java)
-            val newSong = Song("newSong", 0)
-            intent.putExtra("selectedSong", newSong)
-            startActivity(intent)
-        }
     }
 
     private fun tempPrepareSongData() {
@@ -46,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createNewSong(view: View) {
-        Toast.makeText(this, "newSong will come out", Toast.LENGTH_SHORT).show();
+        val intent = Intent(this, EditActivity::class.java)
+        val newSong = Song("newSong", 0)
+        intent.putExtra("selectedSong", newSong)
+        startActivity(intent)
     }
 }

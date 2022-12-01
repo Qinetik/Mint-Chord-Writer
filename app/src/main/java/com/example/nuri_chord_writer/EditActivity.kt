@@ -1,16 +1,10 @@
-package com.example.nuri_chord_writer
+package com.example.mint_chord_writer
 
-import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.MotionEvent
 import android.view.View
 import android.widget.*
-import androidx.core.graphics.contains
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -32,10 +26,18 @@ class EditActivity : AppCompatActivity() {
         val chordNum: TextView = findViewById(R.id.chordNum)
         chordNum.text = "1/"+currentSong?.chords?.size
 
-        val fratNumItems = listOf("1st", "2nd", "3rd", "4th", "5th")
-        val adapter = ArrayAdapter(this, R.layout.frat_num_item, fratNumItems)
-        fratNum.editText?.setText(fratNumItems[0])
-        (fratNum.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        fratNumButton.setText("1st")
+
+        fratNumButton.setOnClickListener {
+            PopupMenu(this!!, fratNumButton).apply {
+                menuInflater.inflate(R.menu.start_frat_menu, menu)
+                setOnMenuItemClickListener { item ->
+                    fratNumButton.setText(item.title)
+                    true
+                }
+                show()
+            }
+        }
 
         fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
             when(i) {

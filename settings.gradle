@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Nuri_Chord_Writer"
+rootProject.name = "Mint_Chord_Writer"

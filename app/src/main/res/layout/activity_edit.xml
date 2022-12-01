@@ -50,38 +50,56 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
-    <TextView
-        android:id="@+id/capoText"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/capo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Capo"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="Capo: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.025">
+
+        <EditText
+            android:id="@+id/capoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:importantForAutofill="no"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fratNum"
-        style="@style/ClearDropDown"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Starting Frat"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/clear"
-        app:endIconTint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20575"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toEndOf="@+id/guitarPanel"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1">
+        app:layout_constraintVertical_bias="0.95">
 
-        <AutoCompleteTextView
+        <EditText
+            android:id="@+id/fratNumButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:textSize="10dp" />
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:importantForAutofill="no"
+        />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,12 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1/1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.80"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintBottom_toTopOf="@+id/nextChordButton"
+        app:layout_constraintEnd_toEndOf="@+id/nextChordButton"
+        app:layout_constraintStart_toStartOf="@+id/prevChordButton"
+        app:layout_constraintTop_toBottomOf="@+id/prevChordButton"
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageButton
         android:id="@+id/string6MuteButton"
@@ -198,28 +215,30 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
+        android:rotation="90"
         android:scaleType="fitCenter"
         android:src="@drawable/left_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.70"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.995" />
+        app:layout_constraintVertical_bias="0.15" />
 
     <ImageButton
         android:id="@+id/nextChordButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="#00FFFFFF"
+        android:rotation="90"
         android:scaleType="fitCenter"
         android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.90"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.995" />
+        app:layout_constraintVertical_bias="0.975" />
 
     <RadioGroup
         android:id="@+id/fingerSelection"
@@ -227,7 +246,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toEndOf="@+id/guitarPanel"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -777,16 +796,16 @@
         style="@style/Theme.FingerButton"
         android:layout_width="50dp"
         android:layout_height="40dp"
+        android:alpha="0"
         android:background="@drawable/finger_circle"
         android:gravity="center_vertical|center_horizontal"
-        android:alpha="0"
         android:onClick="fratClick"
         android:tag="54"
         app:layout_constraintBottom_toBottomOf="@+id/guitarPanel"
         app:layout_constraintEnd_toEndOf="@+id/guitarPanel"
         app:layout_constraintHorizontal_bias="0.94"
         app:layout_constraintStart_toStartOf="@+id/guitarPanel"
-        app:layout_constraintTop_toTopOf="@+id/guitarPanel"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9525" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

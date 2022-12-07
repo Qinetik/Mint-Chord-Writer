@@ -1,10 +1,16 @@
 package com.example.mint_chord_writer
 
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.PopupMenu
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -18,21 +24,42 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
+        //hide navigationBar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window,
+                window.decorView.findViewById(android.R.id.content)).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+
+            // When the screen is swiped up at the bottom
+            // of the application, the navigationBar shall
+            // appear for some time
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+
         currentSong = intent.getSerializableExtra("selectedSong") as Song
-        val capoText: TextView = findViewById(R.id.capoText)
-        capoText.text = currentSong?.capo.toString()
         val songTitle: TextView = findViewById(R.id.songTitle)
         songTitle.text = currentSong?.name
         val chordNum: TextView = findViewById(R.id.chordNum)
         chordNum.text = "1/"+currentSong?.chords?.size
 
         fratNumButton.setText("1st")
-
         fratNumButton.setOnClickListener {
             PopupMenu(this!!, fratNumButton).apply {
                 menuInflater.inflate(R.menu.start_frat_menu, menu)
                 setOnMenuItemClickListener { item ->
                     fratNumButton.setText(item.title)
+                    true
+                }
+                show()
+            }
+        }
+
+        capoButton.setText(currentSong?.capo.toString())
+        capoButton.setOnClickListener {
+            PopupMenu(this!!, capoButton).apply {
+                menuInflater.inflate(R.menu.capo_menu, menu)
+                setOnMenuItemClickListener { item ->
+                    capoButton.setText(item.title)
                     true
                 }
                 show()

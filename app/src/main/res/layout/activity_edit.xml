@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/titleLayout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01" />
 
@@ -30,39 +30,44 @@
         android:layout_width="400dp"
         android:layout_height="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintEnd_toStartOf="@+id/fingerSelection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.10"
         app:srcCompat="@drawable/guitar_panel_h"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/songTitle"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:hint="Title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.80"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editToMain"
+        app:layout_constraintStart_toEndOf="@+id/fingerSelection"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.025">
 
+        <EditText
+            android:id="@+id/songTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/capo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Capo"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:hint="Capo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintEnd_toEndOf="@+id/titleLayout"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/titleLayout"
+        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+        app:layout_constraintVertical_bias="0">
 
         <EditText
             android:id="@+id/capoButton"
@@ -72,23 +77,22 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:importantForAutofill="no"
-            />
+            android:importantForAutofill="no" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fratNum"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Starting Frat"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
+        android:hint="Starting Frat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toEndOf="@+id/guitarPanel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95">
+        app:layout_constraintEnd_toEndOf="@+id/titleLayout"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/capo"
+        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+        app:layout_constraintVertical_bias="0">
 
         <EditText
             android:id="@+id/fratNumButton"
@@ -98,8 +102,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:importantForAutofill="no"
-        />
+            android:importantForAutofill="no" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,8 +112,8 @@
         android:layout_height="wrap_content"
         android:text="1/1"
         app:layout_constraintBottom_toTopOf="@+id/nextChordButton"
-        app:layout_constraintEnd_toEndOf="@+id/nextChordButton"
-        app:layout_constraintStart_toStartOf="@+id/prevChordButton"
+        app:layout_constraintEnd_toEndOf="@+id/editToMain"
+        app:layout_constraintStart_toStartOf="@+id/editToMain"
         app:layout_constraintTop_toBottomOf="@+id/prevChordButton"
         app:layout_constraintVertical_bias="0.5" />
 
@@ -219,9 +222,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/left_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editToMain"
+        app:layout_constraintStart_toStartOf="@+id/editToMain"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15" />
 
@@ -234,9 +236,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editToMain"
+        app:layout_constraintStart_toStartOf="@+id/editToMain"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
 
@@ -245,8 +246,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintEnd_toStartOf="@+id/capo"
         app:layout_constraintStart_toEndOf="@+id/guitarPanel"
         app:layout_constraintTop_toTopOf="parent">
 

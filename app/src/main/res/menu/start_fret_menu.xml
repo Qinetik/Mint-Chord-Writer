@@ -4,23 +4,31 @@
     android:layout_width="0dp"
     style="@style/popupMenuStyle">
     <item
-        android:id="@+id/type1"
+        android:id="@+id/fret0"
         android:title="1st"
         />
     <item
-        android:id="@+id/type2"
+        android:id="@+id/fret1"
         android:title="2nd"
     />
     <item
-        android:id="@+id/type3"
+        android:id="@+id/fret2"
         android:title="3rd"
     />
     <item
-        android:id="@+id/type4"
-        android:title= "4th"
+        android:id="@+id/fret3"
+        android:title="4th"
     />
     <item
-        android:id="@+id/type5"
+        android:id="@+id/fret4"
         android:title="5th"
     />
+    <item
+        android:id="@+id/fret5"
+        android:title="6th"
+        />
+    <item
+        android:id="@+id/fret6"
+        android:title="7th"
+        />
 </menu>

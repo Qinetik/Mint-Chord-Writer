@@ -17,19 +17,21 @@ P1
 8. Display sequence of chords.  
 9. Display Thumbnail image for each sequence.  
 ~~10. User Able to click Panel to place finger key~~  
-11. Display number of current chord. with "+" and "delete" buttons to increase or decrease the number of chords.  
+~~11. Display number of current chord. with "+" and "delete" buttons to increase or decrease the number of chords.~~  
 ~~12. Display the choices of "stickers" 1 to T.~~  
 ~~13. Display the editable Capo #.~~  
 ~~14. Display mute option for each strings.~~  
 ~~15. Editable Title~~  
-~~16. Editable Starting Frat~~  
+~~16. Editable Starting Fret~~  
 17. Save Current work  
+~~18. move to next/prev chords~~  
+~~19. moving to another chord bring the data but keep the constant capo~~  
 
 P2  
-18. Dark Mode Support  
-19. Beautify UI  
+20. Dark Mode Support  
+21. Beautify UI  
 
 P3  
-20. Auto Skip by given time  
-21. Play, Pause, go back to 1st.  
-22. Play the chord sound  
+22. Auto Skip by given time  
+23. Play, Pause, go back to 1st.  
+24. Play the chord sound  

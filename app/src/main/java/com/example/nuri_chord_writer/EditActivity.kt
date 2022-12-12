@@ -2,6 +2,7 @@ package com.example.mint_chord_writer
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -14,8 +15,9 @@ import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
-    private var fratButtons = arrayOf(arrayOf<Button>())
-    private var currentFinger = "T"
+    private var fretButtons = arrayOf(arrayOf<Button>())
+    private var currentFinger = Finger.THUMB
+    private var currentChordIndex = 0
     private var mutes = arrayOf<Boolean>(false, false, false, false, false, false)
     private lateinit var currentSong:Song
 
@@ -26,28 +28,21 @@ class EditActivity : AppCompatActivity() {
 
         //hide navigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window,
-                window.decorView.findViewById(android.R.id.content)).let { controller ->
+        WindowInsetsControllerCompat(window, window.decorView.findViewById(android.R.id.content)).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
-
-            // When the screen is swiped up at the bottom
-            // of the application, the navigationBar shall
-            // appear for some time
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         currentSong = intent.getSerializableExtra("selectedSong") as Song
         val songTitle: TextView = findViewById(R.id.songTitle)
         songTitle.text = currentSong?.name
-        val chordNum: TextView = findViewById(R.id.chordNum)
-        chordNum.text = "1/"+currentSong?.chords?.size
-
-        fratNumButton.setText("1st")
-        fratNumButton.setOnClickListener {
-            PopupMenu(this!!, fratNumButton).apply {
-                menuInflater.inflate(R.menu.start_frat_menu, menu)
+        fretNumButton.setText("1st")
+        fretNumButton.setOnClickListener {
+            PopupMenu(this!!, fretNumButton).apply {
+                menuInflater.inflate(R.menu.start_fret_menu, menu)
                 setOnMenuItemClickListener { item ->
-                    fratNumButton.setText(item.title)
+                    fretNumButton.setText(item.title)
+                    setFretNum(item.title.substring(0,1).toInt())
                     true
                 }
                 show()
@@ -68,24 +63,25 @@ class EditActivity : AppCompatActivity() {
 
         fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
             when(i) {
-                R.id.thumbFinger -> currentFinger = "T"
-                R.id.oneFinger -> currentFinger = "1"
-                R.id.twoFinger -> currentFinger = "2"
-                R.id.threeFinger -> currentFinger = "3"
-                R.id.fourFinger -> currentFinger = "4"
+                R.id.thumbFinger -> currentFinger = Finger.THUMB
+                R.id.oneFinger -> currentFinger = Finger.ONE
+                R.id.twoFinger -> currentFinger = Finger.TWO
+                R.id.threeFinger -> currentFinger = Finger.THREE
+                R.id.fourFinger -> currentFinger = Finger.FOUR
+                R.id.nullFinger -> currentFinger = Finger.NULL
             }
         }
 
-        fratNum.setOnFocusChangeListener { _ , hasFocus: Boolean ->
-            println("what happening here?")
+        fretNum.setOnFocusChangeListener { _ , hasFocus: Boolean ->
+            Log.d("focus check","what happening here?")
             if (hasFocus) {
-                println("focus? how does this work")
+                Log.d("focus check","focus? how does this work")
             } else {
-                println("focus lost")
+                Log.d("focus check","focus lost")
             }
         }
 
-        fratButtons = arrayOf(
+        fretButtons = arrayOf(
                 arrayOf(findViewById<Button>(R.id.finger0_0), findViewById<Button>(R.id.finger0_1), findViewById<Button>(R.id.finger0_2), findViewById<Button>(R.id.finger0_3), findViewById<Button>(R.id.finger0_4)),
                 arrayOf(findViewById<Button>(R.id.finger1_0), findViewById<Button>(R.id.finger1_1), findViewById<Button>(R.id.finger1_2), findViewById<Button>(R.id.finger1_3), findViewById<Button>(R.id.finger1_4)),
                 arrayOf(findViewById<Button>(R.id.finger2_0), findViewById<Button>(R.id.finger2_1), findViewById<Button>(R.id.finger2_2), findViewById<Button>(R.id.finger2_3), findViewById<Button>(R.id.finger2_4)),
@@ -93,17 +89,50 @@ class EditActivity : AppCompatActivity() {
                 arrayOf(findViewById<Button>(R.id.finger4_0), findViewById<Button>(R.id.finger4_1), findViewById<Button>(R.id.finger4_2), findViewById<Button>(R.id.finger4_3), findViewById<Button>(R.id.finger4_4)),
                 arrayOf(findViewById<Button>(R.id.finger5_0), findViewById<Button>(R.id.finger5_1), findViewById<Button>(R.id.finger5_2), findViewById<Button>(R.id.finger5_3), findViewById<Button>(R.id.finger5_4))
         )
-
         applyCurrentSong()
     }
 
     fun applyCurrentSong() {
         println(currentSong)
-
+        renderChordNum()
     }
 
     fun goHome(view: View) {
         finish()
+    }
+
+    fun addNewChord(view: View) {
+        currentSong.addNewChord()
+        currentChordIndex = currentSong?.chords?.size-1
+        renderChordNum()
+    }
+
+    fun deleteCurrentChord(view: View) {
+        if(currentSong?.chords?.size > 1) {
+            currentSong.removeChord(currentChordIndex)
+            if(currentChordIndex > 0)
+                currentChordIndex--
+        }
+        renderChordNum()
+    }
+
+    fun renderChordNum() {
+        chordNum.text = (currentChordIndex + 1).toString() + "/" + currentSong?.chords?.size
+        loadChord()
+    }
+
+    fun movePrevChord(view: View) {
+        if(currentChordIndex > 0) {
+            currentChordIndex--
+            renderChordNum()
+        }
+    }
+
+    fun moveNextChord(view: View) {
+        if(currentChordIndex < currentSong?.chords?.size-1) {
+            currentChordIndex++
+            renderChordNum()
+        }
     }
 
     override fun onBackPressed() {
@@ -116,22 +145,46 @@ class EditActivity : AppCompatActivity() {
         println("destroyed")
     }
 
-    fun fratClick(view: View) {
+    fun fretClick(view: View) {
         if(view.alpha == 1.0F) {
             view.alpha = 0.0F
+            val b = findViewById<Button>(view.id)
+            b.text = convertFingerEnumToString(currentFinger)
+            val position = view.getTag().toString()
+            currentSong.chords[currentChordIndex].setGStringFretByIndex(getGstringIndex(position), -1)
         } else {
             view.alpha = 1.0F
-            var b = findViewById<Button>(view.id)
-            b.text = currentFinger
-            handleFratLine(view.getTag().toString())
+            val b = findViewById<Button>(view.id)
+            b.text = convertFingerEnumToString(currentFinger)
+            val position = view.getTag().toString()
+            currentSong.chords[currentChordIndex].setGStringFingerByIndex(getGstringIndex(position), currentFinger)
+            currentSong.chords[currentChordIndex].setGStringFretByIndex(getGstringIndex(position), getGstringFret(position))
+            handleFretLine(position)
         }
     }
 
-    fun handleFratLine(position: String) {
-        for(buttons in fratButtons[position.substring(0,1).toInt()]) {
+    fun handleFretLine(position: String) {
+        for(buttons in fretButtons[getGstringIndex(position)]) {
             if(buttons.tag.toString() != position) {
                 buttons.alpha = 0.0F
             }
+        }
+    }
+
+    fun loadChord() {
+        val currentChord = currentSong.chords[currentChordIndex]
+        fretNumButton.setText(convertStartFretNumToTitle(currentChord.startingFret))
+        for(i in 0..5) {
+            for(button in fretButtons[i]) {
+                //buttonTag ex: "01"
+                if(getGstringFret(button.tag.toString()) != currentChord.strings[i].fret) {
+                    button.alpha = 0.0F
+                } else {
+                    button.alpha = 1.0F
+                    button.text = convertFingerEnumToString(currentChord.strings[i].finger)
+                }
+            }
+
         }
     }
 
@@ -144,6 +197,42 @@ class EditActivity : AppCompatActivity() {
         } else {
             b.setImageResource(R.drawable.black_x)
             mutes[index] = true
+        }
+    }
+
+    fun setFretNum(startingFret: Int) {
+        currentSong.chords[currentChordIndex].startingFret = startingFret-1
+    }
+
+    //helper functions below
+    fun getGstringIndex(position: String): Int {
+        return position.substring(0,1).toInt()
+    }
+
+    fun getGstringFret(position: String): Int {
+        return position.substring(1,2).toInt()
+    }
+
+    fun convertFingerEnumToString(finger: Finger): String {
+        return when (finger) {
+            Finger.THUMB -> "T"
+            Finger.ONE -> "1"
+            Finger.TWO -> "2"
+            Finger.THREE -> "3"
+            Finger.FOUR -> "4"
+            Finger.NULL -> ""
+        }
+    }
+
+    fun convertStartFretNumToTitle(startingFret: Int): String {
+        return when (startingFret) {
+            1 -> "2nd"
+            2 -> "3rd"
+            3 -> "4th"
+            4 -> "5th"
+            5 -> "6th"
+            6 -> "7th"
+            else -> "1st"
         }
     }
 }

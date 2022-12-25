@@ -2,6 +2,8 @@ package com.example.mint_chord_writer
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -36,6 +39,22 @@ class EditActivity : AppCompatActivity() {
         currentSong = intent.getSerializableExtra("selectedSong") as Song
         val songTitle: TextView = findViewById(R.id.songTitle)
         songTitle.text = currentSong?.name
+
+        chordTitle.addTextChangedListener( object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                Log.d("a", "afterChange")
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.d("a", "preChange")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("a", s.toString())
+                currentSong.chords[currentChordIndex].name = s.toString()
+            }
+        })
+
         fretNumButton.setText("1st")
         fretNumButton.setOnClickListener {
             PopupMenu(this!!, fretNumButton).apply {
@@ -95,6 +114,7 @@ class EditActivity : AppCompatActivity() {
     fun applyCurrentSong() {
         println(currentSong)
         renderChordNum()
+        renderChordTitle()
     }
 
     fun goHome(view: View) {
@@ -105,6 +125,7 @@ class EditActivity : AppCompatActivity() {
         currentSong.addNewChord()
         currentChordIndex = currentSong?.chords?.size-1
         renderChordNum()
+        renderChordTitle()
     }
 
     fun deleteCurrentChord(view: View) {
@@ -114,6 +135,12 @@ class EditActivity : AppCompatActivity() {
                 currentChordIndex--
         }
         renderChordNum()
+        renderChordTitle()
+    }
+
+    fun renderChordTitle() {
+        val chordTitle: TextView = findViewById(R.id.chordTitle)
+        chordTitle.text = currentSong?.chords[currentChordIndex].name
     }
 
     fun renderChordNum() {
@@ -125,6 +152,7 @@ class EditActivity : AppCompatActivity() {
         if(currentChordIndex > 0) {
             currentChordIndex--
             renderChordNum()
+            renderChordTitle()
         }
     }
 
@@ -132,6 +160,7 @@ class EditActivity : AppCompatActivity() {
         if(currentChordIndex < currentSong?.chords?.size-1) {
             currentChordIndex++
             renderChordNum()
+            renderChordTitle()
         }
     }
 

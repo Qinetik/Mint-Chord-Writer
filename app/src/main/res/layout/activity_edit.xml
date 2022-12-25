@@ -57,6 +57,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/chordTitleLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Chord Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editToMain"
+        app:layout_constraintStart_toEndOf="@+id/fingerSelection"
+        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+        app:layout_constraintVertical_bias="0">
+
+        <EditText
+            android:id="@+id/chordTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/capo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="70dp"
@@ -66,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="@+id/titleLayout"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/titleLayout"
-        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+        app:layout_constraintTop_toBottomOf="@+id/chordTitleLayout"
         app:layout_constraintVertical_bias="0">
 
         <EditText
@@ -91,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="@+id/titleLayout"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@+id/capo"
-        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+        app:layout_constraintTop_toBottomOf="@+id/chordTitleLayout"
         app:layout_constraintVertical_bias="0">
 
         <EditText

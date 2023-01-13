@@ -9,8 +9,8 @@ data class Song(var name: String, var capo: Int = 0) : Serializable {
         chords.add(Chord())
     }
 
-    fun addNewChord() {
-        this.chords.add(Chord())
+    fun addNewChord(index: Int) {
+        this.chords.add(index+1, Chord())
     }
 
     fun removeChord(index: Int) {

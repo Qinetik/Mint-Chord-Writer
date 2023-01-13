@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_edit.*
 
 class EditActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class EditActivity : AppCompatActivity() {
     private var currentChordIndex = 0
     private var mutes = arrayOf<Boolean>(false, false, false, false, false, false)
     private lateinit var currentSong:Song
+    private var chordCardList = arrayListOf<ChordCard>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -42,16 +43,17 @@ class EditActivity : AppCompatActivity() {
 
         chordTitle.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                Log.d("a", "afterChange")
+                Log.d("aaa", "afterChange")
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("a", "preChange")
+                Log.d("aaa", "preChange")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("a", s.toString())
+                Log.d("aaa", "onChange")
                 currentSong.chords[currentChordIndex].name = s.toString()
+                updateChordListView(currentChordIndex, s.toString(), false)
             }
         })
 
@@ -108,11 +110,13 @@ class EditActivity : AppCompatActivity() {
                 arrayOf(findViewById<Button>(R.id.finger4_0), findViewById<Button>(R.id.finger4_1), findViewById<Button>(R.id.finger4_2), findViewById<Button>(R.id.finger4_3), findViewById<Button>(R.id.finger4_4)),
                 arrayOf(findViewById<Button>(R.id.finger5_0), findViewById<Button>(R.id.finger5_1), findViewById<Button>(R.id.finger5_2), findViewById<Button>(R.id.finger5_3), findViewById<Button>(R.id.finger5_4))
         )
+
         applyCurrentSong()
     }
 
     fun applyCurrentSong() {
         println(currentSong)
+        prepareChordArrays()
         renderChordNum()
         renderChordTitle()
     }
@@ -122,20 +126,45 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun addNewChord(view: View) {
-        currentSong.addNewChord()
-        currentChordIndex = currentSong?.chords?.size-1
+        Log.d("aaa", "addNewChord")
+        currentSong.addNewChord(currentChordIndex)
+        updateChordListView(currentChordIndex, null, false)
+        currentChordIndex++
         renderChordNum()
         renderChordTitle()
     }
 
     fun deleteCurrentChord(view: View) {
+        Log.d("aaa", "deleteChord")
         if(currentSong?.chords?.size > 1) {
             currentSong.removeChord(currentChordIndex)
             if(currentChordIndex > 0)
                 currentChordIndex--
+            updateChordListView(currentChordIndex, null, true)
+            renderChordNum()
+            renderChordTitle()
         }
-        renderChordNum()
-        renderChordTitle()
+    }
+
+    fun prepareChordArrays() {
+        for(i in currentSong.chords) {
+            chordCardList.add(ChordCard(i.name))
+        }
+        chordListView.layoutManager = LinearLayoutManager(this)
+        chordListView.adapter = ChordsAdapter(chordCardList, this)
+    }
+
+    fun updateChordListView(index: Int, name: String?, isRemove: Boolean) {
+        if(name == null) {
+            if(isRemove) {
+                chordCardList.removeAt(index)
+            } else {
+                chordCardList.add(index+1, ChordCard(""))
+            }
+        } else {
+            chordCardList[index].name = name
+        }
+        chordListView.adapter?.notifyDataSetChanged()
     }
 
     fun renderChordTitle() {
@@ -162,6 +191,12 @@ class EditActivity : AppCompatActivity() {
             renderChordNum()
             renderChordTitle()
         }
+    }
+
+    fun moveToChord(index: Int) {
+        currentChordIndex = index
+        renderChordNum()
+        renderChordTitle()
     }
 
     override fun onBackPressed() {

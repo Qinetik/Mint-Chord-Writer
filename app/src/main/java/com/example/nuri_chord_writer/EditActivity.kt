@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_edit.*
 class EditActivity : AppCompatActivity() {
     private var fretButtons = arrayOf(arrayOf<Button>())
     private var currentFinger = Finger.THUMB
-    private var currentChordIndex = 0
+    public var currentChordIndex = 0
     private var mutes = arrayOf<Boolean>(false, false, false, false, false, false)
     private lateinit var currentSong:Song
     private var chordCardList = arrayListOf<ChordCard>()

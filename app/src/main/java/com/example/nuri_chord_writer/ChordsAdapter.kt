@@ -29,10 +29,12 @@ class ChordsAdapter(var ChordCardList:ArrayList<ChordCard>, val context: Context
             holder.name.text = (position+1).toString()
         }
 
+        if ((context as EditActivity).currentChordIndex == position) {
+            holder.name.text = "*"+holder.name.text
+        }
+
         holder.itemView.setOnClickListener{
-            if(context is EditActivity) {
-                context.moveToChord(position)
-            }
+            (context as EditActivity).moveToChord(position)
         }
     }
 

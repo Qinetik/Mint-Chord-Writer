@@ -14,21 +14,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_edit.*
+import com.example.mint_chord_writer.databinding.ActivityEditBinding
+
 
 class EditActivity : AppCompatActivity() {
     private var fretButtons = arrayOf(arrayOf<Button>())
     private var currentFinger = Finger.THUMB
-    public var currentChordIndex = 0
+    var currentChordIndex = 0
     private var mutes = arrayOf<Boolean>(false, false, false, false, false, false)
     private lateinit var currentSong:Song
     private var chordCardList = arrayListOf<ChordCard>()
+    private lateinit var editActivityBinding: ActivityEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        editActivityBinding = ActivityEditBinding.inflate(layoutInflater)
+        setContentView(editActivityBinding.root)
+
 
         //hide navigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -41,7 +47,7 @@ class EditActivity : AppCompatActivity() {
         val songTitle: TextView = findViewById(R.id.songTitle)
         songTitle.text = currentSong?.name
 
-        chordTitle.addTextChangedListener( object : TextWatcher {
+        editActivityBinding.chordTitle.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 Log.d("aaa", "afterChange")
             }
@@ -57,32 +63,32 @@ class EditActivity : AppCompatActivity() {
             }
         })
 
-        fretNumButton.setText("1st")
-        fretNumButton.setOnClickListener {
-            PopupMenu(this!!, fretNumButton).apply {
+        editActivityBinding.fretNumButton.setText("1st")
+        editActivityBinding.fretNumButton.setOnClickListener {
+            PopupMenu(this!!, editActivityBinding.fretNumButton).apply {
                 menuInflater.inflate(R.menu.start_fret_menu, menu)
                 setOnMenuItemClickListener { item ->
-                    fretNumButton.setText(item.title)
-                    setFretNum(item.title.substring(0,1).toInt())
+                    editActivityBinding.fretNumButton.setText(item.title)
+                    setFretNum(item.title?.substring(0,1)?.toInt()?: 0 )
                     true
                 }
                 show()
             }
         }
 
-        capoButton.setText(currentSong?.capo.toString())
-        capoButton.setOnClickListener {
-            PopupMenu(this!!, capoButton).apply {
+        editActivityBinding.capoButton.setText(currentSong?.capo.toString())
+        editActivityBinding.capoButton.setOnClickListener {
+            PopupMenu(this!!, editActivityBinding.capoButton).apply {
                 menuInflater.inflate(R.menu.capo_menu, menu)
                 setOnMenuItemClickListener { item ->
-                    capoButton.setText(item.title)
+                    editActivityBinding.capoButton.setText(item.title)
                     true
                 }
                 show()
             }
         }
 
-        fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
+        editActivityBinding.fingerSelection.setOnCheckedChangeListener{fingerSelection, i ->
             when(i) {
                 R.id.thumbFinger -> currentFinger = Finger.THUMB
                 R.id.oneFinger -> currentFinger = Finger.ONE
@@ -93,7 +99,7 @@ class EditActivity : AppCompatActivity() {
             }
         }
 
-        fretNum.setOnFocusChangeListener { _ , hasFocus: Boolean ->
+        editActivityBinding.fretNum.setOnFocusChangeListener { _ , hasFocus: Boolean ->
             Log.d("focus check","what happening here?")
             if (hasFocus) {
                 Log.d("focus check","focus? how does this work")
@@ -150,8 +156,8 @@ class EditActivity : AppCompatActivity() {
         for(i in currentSong.chords) {
             chordCardList.add(ChordCard(i.name))
         }
-        chordListView.layoutManager = LinearLayoutManager(this)
-        chordListView.adapter = ChordsAdapter(chordCardList, this)
+        editActivityBinding.chordListView.layoutManager = LinearLayoutManager(this)
+        editActivityBinding.chordListView.adapter = ChordsAdapter(chordCardList, this)
     }
 
     fun updateChordListView(index: Int, name: String?, isRemove: Boolean) {
@@ -164,7 +170,7 @@ class EditActivity : AppCompatActivity() {
         } else {
             chordCardList[index].name = name
         }
-        chordListView.adapter?.notifyDataSetChanged()
+        editActivityBinding.chordListView.adapter?.notifyDataSetChanged()
     }
 
     fun renderChordTitle() {
@@ -173,7 +179,8 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun renderChordNum() {
-        chordNum.text = (currentChordIndex + 1).toString() + "/" + currentSong?.chords?.size
+        editActivityBinding.chordNum.text = (currentChordIndex + 1).toString() + "/" + currentSong?.chords?.size
+        Log.d("aaa", editActivityBinding.chordNum.text as String)
         loadChord()
     }
 
@@ -237,7 +244,7 @@ class EditActivity : AppCompatActivity() {
 
     fun loadChord() {
         val currentChord = currentSong.chords[currentChordIndex]
-        fretNumButton.setText(convertStartFretNumToTitle(currentChord.startingFret))
+        editActivityBinding.fretNumButton.setText(convertStartFretNumToTitle(currentChord.startingFret))
         for(i in 0..5) {
             for(button in fretButtons[i]) {
                 //buttonTag ex: "01"

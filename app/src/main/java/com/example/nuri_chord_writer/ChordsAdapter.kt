@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.chord_list.view.*
+import com.example.mint_chord_writer.databinding.ChordListBinding
 
 class ChordCard(var name:String)
 
-class ChordsViewHolder(v : View) : RecyclerView.ViewHolder(v) {
+class ChordsViewHolder(v: ChordListBinding) : RecyclerView.ViewHolder(v.root) {
     val name = v.chordText
 }
 
 class ChordsAdapter(var ChordCardList:ArrayList<ChordCard>, val context: Context) : RecyclerView.Adapter<ChordsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChordsViewHolder {
-        val cellForRow = LayoutInflater.from(context).inflate(R.layout.chord_list, parent, false)
+        val cellForRow = ChordListBinding.inflate(LayoutInflater.from(context), parent, false)
         return ChordsViewHolder(cellForRow)
     }
 
@@ -34,7 +34,7 @@ class ChordsAdapter(var ChordCardList:ArrayList<ChordCard>, val context: Context
         }
 
         holder.itemView.setOnClickListener{
-            (context as EditActivity).moveToChord(position)
+            context.moveToChord(position)
         }
     }
 

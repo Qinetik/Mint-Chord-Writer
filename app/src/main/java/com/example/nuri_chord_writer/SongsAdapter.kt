@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.main_songs_list.view.*
+import com.example.mint_chord_writer.databinding.MainSongsListBinding
 
-class SongsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val songName = itemView.songName
+class SongsViewHolder(v: MainSongsListBinding) : RecyclerView.ViewHolder(v.root) {
+    val songName = v.songName
 }
 
 class SongsAdapter(var songs: ArrayList<Song>) : RecyclerView.Adapter<SongsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsViewHolder {
-        return SongsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_songs_list, parent, false))
+        return SongsViewHolder(MainSongsListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {

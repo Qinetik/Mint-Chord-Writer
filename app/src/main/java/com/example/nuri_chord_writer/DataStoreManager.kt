@@ -10,37 +10,40 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.io.IOException
+
+private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name="SONGS")
 
 class DataStoreManager(context: Context) {
-    private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name="SONGS")
+
     private val dataStore = context.dataStore
 
-    suspend fun getSongIds() {
+    suspend fun getSongIds(): String {
         val stringIds = this.read("song_ids")
-        Log.d("aaa", stringIds.toString())
+        return stringIds.toString()
     }
 
     suspend fun save(key: String, value: String) {
         val dataStoreKey = stringPreferencesKey(key)
-        dataStore.edit {songs ->
-            songs[dataStoreKey] = value
+        try {
+            dataStore.edit { songs ->
+                songs[dataStoreKey] = value
+            }
+        } catch (error: IOException) {
+            Log.d("aaa", error.toString())
         }
     }
 
-    private suspend fun read(key: String): String? {
+    suspend fun read(key: String): String? {
         val dataStoreKey = stringPreferencesKey(key)
         val preferences = dataStore.data.first()
         return preferences[dataStoreKey]
-        /*
-        return dataStore.data
-            .catch { exception ->
-                throw exception
-            }
-            .map {pref ->
-                Log.d("aaa", "asdfasdfasdf")
-                val values = pref[songs] ?: "it doesnt exist bro"
-                values
-            }.toString()*/
+    }
+
+    suspend fun remove(key: String) {
+        dataStore.edit {
+            it.remove(stringPreferencesKey(key))
+        }
     }
 
 

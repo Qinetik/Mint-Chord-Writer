@@ -6,11 +6,11 @@ Use cases (12/7/2022
 P1
 ***Main Menu***  
 ~~1. Title~~  
-2. "Create New" Button  
+~~2. "Create New" Button~~  
 ~~3. List of existing songs~~  
 4. Show pop up to name the new song if "Create New" is Pressed
-5. Delete Existing Songs
-
+~~5. Delete Existing Songs~~  
+  
 ***Edit Screen***  
 ~~6. Display the Guitar Panel.~~  
 ~~7. Have a Home button to go back to Main Menu~~  
@@ -23,10 +23,10 @@ P1
 ~~14. Display mute option for each strings.~~  
 ~~15. Editable Title~~  
 ~~16. Editable Starting Fret~~  
-17. Save Current work  [by 12/31]
+~~17. Save Current work~~  
 ~~18. move to next/prev chords~~  
 ~~19. moving to another chord bring the data but keep the constant capo~~  
-20. Display Chord Title or default image for the list  [by 12/24]  
+~~20. Display Chord Title or default image for the list~~  
 
 P2  
 1. Dark Mode Support  

@@ -1,6 +1,8 @@
 package com.example.mint_chord_writer
 
 import android.util.Log
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.Serializable
 
 class Chord() : Serializable {
@@ -20,10 +22,12 @@ class Chord() : Serializable {
         strings[index].mute = mute
     }
 
-    fun printChord() {
-        for(i in strings) {
-            Log.d("Gstring", i.toString())
-        }
+    fun getJson(): JSONObject {
+        val json = JSONObject()
+        json.put("name", this.name)
+        json.put("startingFret", this.startingFret)
+        json.put("strings", JSONArray(this.strings.map{ it.getJson() }))
+        return json
     }
 
 }

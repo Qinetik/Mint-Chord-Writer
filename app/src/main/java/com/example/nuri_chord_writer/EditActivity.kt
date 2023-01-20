@@ -16,8 +16,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mint_chord_writer.databinding.ActivityEditBinding
+import com.example.nuri_chord_writer.DataStoreManager
+import kotlinx.coroutines.launch
 
 
 class EditActivity : AppCompatActivity() {
@@ -28,6 +31,7 @@ class EditActivity : AppCompatActivity() {
     private lateinit var currentSong:Song
     private var chordCardList = arrayListOf<ChordCard>()
     private lateinit var editActivityBinding: ActivityEditBinding
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -35,6 +39,7 @@ class EditActivity : AppCompatActivity() {
         editActivityBinding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(editActivityBinding.root)
 
+        dataStoreManager = DataStoreManager(this)
 
         //hide navigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -43,9 +48,8 @@ class EditActivity : AppCompatActivity() {
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
-        currentSong = intent.getSerializableExtra("selectedSong") as Song
-        val songTitle: TextView = findViewById(R.id.songTitle)
-        songTitle.text = currentSong?.name
+        this.currentSong = intent.getSerializableExtra("selectedSong") as Song
+        editActivityBinding.songTitle.setText(currentSong?.name)
 
         editActivityBinding.chordTitle.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -120,8 +124,23 @@ class EditActivity : AppCompatActivity() {
         applyCurrentSong()
     }
 
+    override fun onPause() {
+        saveCurrentWork()
+        super.onPause()
+    }
+
+    private fun saveCurrentWork() {
+        currentSong.name = editActivityBinding.songTitle.text.toString()
+        lifecycleScope.launch {
+            Log.d("aaa", "saving current Song")
+            Log.d("aaa", currentSong.id)
+            Log.d("aaa", currentSong.getJson().toString())
+            dataStoreManager.save(currentSong.id, currentSong.getJson().toString())
+            Log.d("aaa", "saving here")
+        }
+    }
+
     fun applyCurrentSong() {
-        println(currentSong)
         prepareChordArrays()
         renderChordNum()
         renderChordTitle()
@@ -133,7 +152,7 @@ class EditActivity : AppCompatActivity() {
 
     fun addNewChord(view: View) {
         Log.d("aaa", "addNewChord")
-        currentSong.addNewChord(currentChordIndex)
+        currentSong.addNewChord(currentChordIndex+1)
         updateChordListView(currentChordIndex, null, false)
         currentChordIndex++
         renderChordNum()

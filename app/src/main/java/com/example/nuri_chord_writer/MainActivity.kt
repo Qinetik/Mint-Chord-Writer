@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -17,54 +18,118 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nuri_chord_writer.DataStoreManager
 import androidx.lifecycle.viewModelScope
+import com.example.mint_chord_writer.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
-    private val songList = ArrayList<Song>()
+    private var songList = ArrayList<Song>()
     private lateinit var songsAdapter: SongsAdapter
     private lateinit var dataStoreManager: DataStoreManager
+    private lateinit var mainActivityBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val songsRecyclerView: RecyclerView = findViewById(R.id.mainSongList)
-        songsAdapter = SongsAdapter(songList)
+        mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainActivityBinding.root)
+
+        mainActivityBinding.mainCreateNew.setOnClickListener {
+            this.createNewSong()
+        }
         val layoutManager = LinearLayoutManager(applicationContext)
-        songsRecyclerView.layoutManager = layoutManager
-        songsRecyclerView.itemAnimator = DefaultItemAnimator()
-        songsRecyclerView.adapter = songsAdapter
+        mainActivityBinding.mainSongList.layoutManager = layoutManager
+        mainActivityBinding.mainSongList.itemAnimator = DefaultItemAnimator()
 
         dataStoreManager = DataStoreManager(this)
-        lifecycleScope.launch {
-            Log.d("aaa", "getting value abcd")
-            dataStoreManager.getSongIds()
-        }
-        tempPrepareSongData()
+    }
+
+    override fun onResume() {
+        songList = ArrayList<Song>()
+        songsAdapter = SongsAdapter(songList, this)
+        mainActivityBinding.mainSongList.adapter = songsAdapter
+        super.onResume()
+        prepareSongs()
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("aaa", "save value abcd")
-        /*lifecycleScope.launch {
-            Log.d("aaa", "save value abcd")
-            dataStoreManager.save("song_ids", "['abcd', '1234']")
-        }*/
+        lifecycleScope.launch {
+            Log.d("aaa", "mainActivity onPause")
+            val songIds = JSONArray()
+            for(i in songList) {
+                songIds.put(i.id)
+            }
+            dataStoreManager.save("song_ids", songIds.toString())
+        }
     }
 
+    private fun prepareSongs() {
+        lifecycleScope.launch {
+            delay(100)
+            Log.d("aaa", "getting value from Main")
+            var stringifiedSongIds = dataStoreManager.getSongIds()
+            Log.d("aaa", stringifiedSongIds)
+            val arr = JSONArray(stringifiedSongIds)
+            var sameTitleCount = HashMap<String, Int>()
+            for(i in 0 until arr.length()) {
+                val songId = arr.get(i).toString()
+                Log.d("aaa", songId)
+                val songData = JSONObject(dataStoreManager.read(songId).toString())
+                Log.d("aaa", songData.toString())
+                var song = prepareSongData(songId, songData)
+                if(sameTitleCount[song.name] == null) {
+                    sameTitleCount[song.name] = 0
+                } else {
+                    sameTitleCount[song.name] = sameTitleCount[song.name]!!+1
+                    song.name+= "-" + sameTitleCount[song.name]
+                }
+                songList.add(song)
+            }
+            Log.d("aaa", songList.size.toString())
+            //update the UI
+            mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
+        }
+    }
 
-
-    private fun tempPrepareSongData() {
-        var song = Song( "first Song", 0)
-        songList.add(song)
-        song = Song("second Song", 0)
-        songList.add(song)
+    private fun prepareSongData(songId:String, songJson: JSONObject): Song {
+        val song = Song(songJson.get("name").toString(), songJson.get("capo") as Int, songId)
+        val jsonChords = JSONArray(songJson.get("chords").toString())
+        for(i in 0 until jsonChords.length()) {
+            if (i >= song.chords.size) {
+                song.addNewChord(song.chords.size)
+            }
+            val chord = Chord()
+            val jsonChord = JSONObject(jsonChords[i].toString())
+            chord.name = jsonChord.get("name").toString()
+            val jsonStrings = JSONArray(jsonChord.get("strings").toString())
+            for(j in 0 until jsonStrings.length()) {
+                val jsonString = JSONObject(jsonStrings[j].toString())
+                chord.setGStringFingerByIndex(j, Finger.valueOf(jsonString.get("finger").toString()))
+                chord.setGStringFretByIndex(j, jsonString.get("fret") as Int)
+                chord.setGStringMuteByIndex(j, jsonString.get("mute") as Boolean)
+            }
+            song.chords[i] = chord
+        }
+        return song
     }
 
     fun createNewSong() {
         val intent = Intent(this, EditActivity::class.java)
-        val newSong = Song("newSong", 0)
+        val newSong = Song("newSong", 0, Math.random().toString())
+        songList.add(newSong)
         intent.putExtra("selectedSong", newSong)
         startActivity(intent)
+    }
+
+    fun deleteSong(position: Int) {
+        val songId = songList.removeAt(position).id
+        Log.d("aaa", "song removed: $position by $songId")
+        mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
+        lifecycleScope.launch{
+            dataStoreManager.remove(songId)
+        }
     }
 }

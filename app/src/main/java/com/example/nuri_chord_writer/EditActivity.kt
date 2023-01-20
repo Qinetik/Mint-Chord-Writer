@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -274,19 +276,20 @@ class EditActivity : AppCompatActivity() {
                     button.text = convertFingerEnumToString(currentChord.strings[i].finger)
                 }
             }
-
+            mutes[i] = !currentChord.strings[i].mute
+            muteClick(findViewById(resources.getIdentifier("string"+(i+1)+"MuteButton", "id", packageName)))
         }
     }
 
     fun muteClick(view: View) {
         var b = findViewById<ImageButton>(view.id)
-        val index = view.getTag().toString().toInt()
+        val index = view.tag.toString().toInt()
+        mutes[index] = !mutes[index]
+        currentSong.chords[currentChordIndex].strings[index].mute = mutes[index]
         if(mutes[index]) {
-            b.setImageResource(R.drawable.gray_x)
-            mutes[index] = false
-        } else {
             b.setImageResource(R.drawable.black_x)
-            mutes[index] = true
+        } else {
+            b.setImageResource(R.drawable.gray_x)
         }
     }
 

@@ -18,6 +18,12 @@ class DataStoreManager(context: Context) {
 
     private val dataStore = context.dataStore
 
+    suspend fun resetData() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
+
     suspend fun getSongIds(): String {
         val stringIds = this.read("song_ids")
         return stringIds.toString()

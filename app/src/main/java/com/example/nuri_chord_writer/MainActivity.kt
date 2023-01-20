@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -23,6 +24,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
     private var songList = ArrayList<Song>()
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainActivityBinding.root)
+
 
         mainActivityBinding.mainCreateNew.setOnClickListener {
             this.createNewSong()
@@ -71,26 +76,28 @@ class MainActivity : AppCompatActivity() {
             delay(100)
             Log.d("aaa", "getting value from Main")
             var stringifiedSongIds = dataStoreManager.getSongIds()
-            Log.d("aaa", stringifiedSongIds)
-            val arr = JSONArray(stringifiedSongIds)
-            var sameTitleCount = HashMap<String, Int>()
-            for(i in 0 until arr.length()) {
-                val songId = arr.get(i).toString()
-                Log.d("aaa", songId)
-                val songData = JSONObject(dataStoreManager.read(songId).toString())
-                Log.d("aaa", songData.toString())
-                var song = prepareSongData(songId, songData)
-                if(sameTitleCount[song.name] == null) {
-                    sameTitleCount[song.name] = 0
-                } else {
-                    sameTitleCount[song.name] = sameTitleCount[song.name]!!+1
-                    song.name+= "-" + sameTitleCount[song.name]
+            if(stringifiedSongIds != "null") {
+                Log.d("aaa", stringifiedSongIds)
+                val arr = JSONArray(stringifiedSongIds)
+                var sameTitleCount = HashMap<String, Int>()
+                for (i in 0 until arr.length()) {
+                    val songId = arr.get(i).toString()
+                    Log.d("aaa", songId)
+                    val songData = JSONObject(dataStoreManager.read(songId).toString())
+                    Log.d("aaa", songData.toString())
+                    var song = prepareSongData(songId, songData)
+                    if (sameTitleCount[song.name] == null) {
+                        sameTitleCount[song.name] = 0
+                    } else {
+                        sameTitleCount[song.name] = sameTitleCount[song.name]!! + 1
+                        song.name += "-" + sameTitleCount[song.name]
+                    }
+                    songList.add(song)
                 }
-                songList.add(song)
+                Log.d("aaa", songList.size.toString())
+                //update the UI
+                mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
             }
-            Log.d("aaa", songList.size.toString())
-            //update the UI
-            mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -118,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
     fun createNewSong() {
         val intent = Intent(this, EditActivity::class.java)
-        val newSong = Song("newSong", 0, Math.random().toString())
+        val newSong = Song("newSong", 0, UUID.randomUUID().toString())
         songList.add(newSong)
         intent.putExtra("selectedSong", newSong)
         startActivity(intent)

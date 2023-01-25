@@ -6,16 +6,16 @@ import org.json.JSONObject
 import java.io.Serializable
 
 class Chord() : Serializable {
-    var strings: Array<GString> = arrayOf(GString(Finger.NULL, -1, false), GString(Finger.NULL, -1, false), GString(Finger.NULL, -1, false), GString(Finger.NULL, -1, false), GString(Finger.NULL, -1, false), GString(Finger.NULL, -1, false))
+    var strings: Array<GString> = arrayOf(GString(false), GString(false), GString(false), GString(false), GString(false), GString(false))
     var startingFret: Int = 0
     var name: String = ""
 
-    fun setGStringFingerByIndex(index: Int, finger: Finger) {
-        strings[index].finger = finger
+    fun setGStringByIndex(index: Int, fret: Int, finger: Finger) {
+        strings[index].keys[fret] = finger
     }
 
-    fun setGStringFretByIndex(index: Int, fret: Int) {
-        strings[index].fret = fret
+    fun removeGStringByIndex(index: Int, fret: Int) {
+        strings[index].keys.remove(fret)
     }
 
     fun setGStringMuteByIndex(index: Int, mute: Boolean) {

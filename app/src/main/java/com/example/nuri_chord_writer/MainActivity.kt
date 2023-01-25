@@ -27,6 +27,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashMap
 
 class MainActivity : AppCompatActivity() {
     private var songList = ArrayList<Song>()
@@ -114,8 +115,10 @@ class MainActivity : AppCompatActivity() {
             val jsonStrings = JSONArray(jsonChord.get("strings").toString())
             for(j in 0 until jsonStrings.length()) {
                 val jsonString = JSONObject(jsonStrings[j].toString())
-                chord.setGStringFingerByIndex(j, Finger.valueOf(jsonString.get("finger").toString()))
-                chord.setGStringFretByIndex(j, jsonString.get("fret") as Int)
+                val keys = JSONObject(jsonString.get("keys").toString())
+                for(k in keys.keys()) {
+                    chord.setGStringByIndex(j, k.toInt(), Finger.valueOf(keys.get(k).toString()))
+                }
                 chord.setGStringMuteByIndex(j, jsonString.get("mute") as Boolean)
             }
             song.chords[i] = chord

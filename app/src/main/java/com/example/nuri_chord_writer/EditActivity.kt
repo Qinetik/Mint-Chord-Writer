@@ -243,15 +243,13 @@ class EditActivity : AppCompatActivity() {
             val b = findViewById<Button>(view.id)
             b.text = convertFingerEnumToString(currentFinger)
             val position = view.getTag().toString()
-            currentSong.chords[currentChordIndex].setGStringFretByIndex(getGstringIndex(position), -1)
+            currentSong.chords[currentChordIndex].removeGStringByIndex(getGstringIndex(position), getGstringFret(position))
         } else {
             view.alpha = 1.0F
             val b = findViewById<Button>(view.id)
             b.text = convertFingerEnumToString(currentFinger)
             val position = view.getTag().toString()
-            currentSong.chords[currentChordIndex].setGStringFingerByIndex(getGstringIndex(position), currentFinger)
-            currentSong.chords[currentChordIndex].setGStringFretByIndex(getGstringIndex(position), getGstringFret(position))
-            handleFretLine(position)
+            currentSong.chords[currentChordIndex].setGStringByIndex(getGstringIndex(position), getGstringFret(position), currentFinger)
         }
     }
 
@@ -269,11 +267,12 @@ class EditActivity : AppCompatActivity() {
         for(i in 0..5) {
             for(button in fretButtons[i]) {
                 //buttonTag ex: "01"
-                if(getGstringFret(button.tag.toString()) != currentChord.strings[i].fret) {
+                val fret = getGstringFret(button.tag.toString())
+                if(currentChord.strings[i].keys[fret] == null) {
                     button.alpha = 0.0F
                 } else {
                     button.alpha = 1.0F
-                    button.text = convertFingerEnumToString(currentChord.strings[i].finger)
+                    button.text = convertFingerEnumToString(currentChord.strings[i].keys[fret]!!)
                 }
             }
             mutes[i] = !currentChord.strings[i].mute

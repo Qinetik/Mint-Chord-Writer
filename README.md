@@ -30,7 +30,7 @@ P1
 P2  
 3-1. Beautify UI  
 3-2. Apply Icon  
-3-3. Support multiple keys in single string  
+~~3-3. Support multiple keys in single string~~  
 3-4. Multiple Vertical Keys show as one single key  
 
 P3 

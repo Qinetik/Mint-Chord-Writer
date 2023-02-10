@@ -1,23 +1,22 @@
 package com.example.mint_chord_writer
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
+import android.view.Gravity
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mint_chord_writer.databinding.ActivityEditBinding
@@ -29,11 +28,13 @@ class EditActivity : AppCompatActivity() {
     private var fretButtons = arrayOf(arrayOf<Button>())
     private var currentFinger = Finger.THUMB
     var currentChordIndex = 0
-    private var mutes = arrayOf<Boolean>(false, false, false, false, false, false)
+    private var mutes = arrayOf(false, false, false, false, false, false)
     private lateinit var currentSong:Song
     private var chordCardList = arrayListOf<ChordCard>()
     private lateinit var editActivityBinding: ActivityEditBinding
     private lateinit var dataStoreManager: DataStoreManager
+    private var longBars = arrayOf(ArrayList<View>(), ArrayList<View>(), ArrayList<View>(),
+        ArrayList<View>(), ArrayList<View>(), ArrayList<View>())//key is fret #
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -50,7 +51,11 @@ class EditActivity : AppCompatActivity() {
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
-        this.currentSong = intent.getSerializableExtra("selectedSong") as Song
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            this.currentSong = intent.getSerializableExtra("selectedSong", Song::class.java)!!
+        } else {
+            this.currentSong = intent.getSerializableExtra("selectedSong") as Song
+        }
         editActivityBinding.songTitle.setText(currentSong?.name)
 
         editActivityBinding.chordTitle.addTextChangedListener( object : TextWatcher {
@@ -88,6 +93,8 @@ class EditActivity : AppCompatActivity() {
                 menuInflater.inflate(R.menu.capo_menu, menu)
                 setOnMenuItemClickListener { item ->
                     editActivityBinding.capoButton.setText(item.title)
+                    Log.d("aaa", "sleep")
+                    currentSong.capo = item.title.toString().toInt()
                     true
                 }
                 show()
@@ -123,7 +130,11 @@ class EditActivity : AppCompatActivity() {
                 arrayOf(findViewById<Button>(R.id.finger5_0), findViewById<Button>(R.id.finger5_1), findViewById<Button>(R.id.finger5_2), findViewById<Button>(R.id.finger5_3), findViewById<Button>(R.id.finger5_4))
         )
 
-        applyCurrentSong()
+        val layout = findViewById<ConstraintLayout>(R.id.editScreen)
+        layout.post({
+            applyCurrentSong()
+        })
+        //applyCurrentSong()
     }
 
     override fun onPause() {
@@ -149,6 +160,9 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun goHome(view: View) {
+        val data = Intent()
+        data.putExtra("editedSong", currentSong)
+        setResult(Activity.RESULT_OK, data)
         finish()
     }
 
@@ -238,18 +252,18 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun fretClick(view: View) {
+        Log.d("aaa", "button clicked")
+        val b = findViewById<Button>(view.id)
+        b.text = convertFingerEnumToString(currentFinger)
+        val position = view.tag.toString()
         if(view.alpha == 1.0F) {
             view.alpha = 0.0F
-            val b = findViewById<Button>(view.id)
-            b.text = convertFingerEnumToString(currentFinger)
-            val position = view.getTag().toString()
             currentSong.chords[currentChordIndex].removeGStringByIndex(getGstringIndex(position), getGstringFret(position))
+            handleLongBar(getGstringFret(position))
         } else {
             view.alpha = 1.0F
-            val b = findViewById<Button>(view.id)
-            b.text = convertFingerEnumToString(currentFinger)
-            val position = view.getTag().toString()
             currentSong.chords[currentChordIndex].setGStringByIndex(getGstringIndex(position), getGstringFret(position), currentFinger)
+            handleLongBar(getGstringFret(position))
         }
     }
 
@@ -262,8 +276,13 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun loadChord() {
+        for(i in 0 .. 4) {
+            handleLongBar(i)
+        }
         val currentChord = currentSong.chords[currentChordIndex]
         editActivityBinding.fretNumButton.setText(convertStartFretNumToTitle(currentChord.startingFret))
+        Log.d("aaa", currentChord.startingFret.toString())
+        Log.d("aaa", convertStartFretNumToTitle(currentChord.startingFret))
         for(i in 0..5) {
             for(button in fretButtons[i]) {
                 //buttonTag ex: "01"
@@ -290,6 +309,67 @@ class EditActivity : AppCompatActivity() {
         } else {
             b.setImageResource(R.drawable.gray_x)
         }
+    }
+
+    fun handleLongBar(fret: Int) {
+        clearFretLongBars(fret)
+        var stringIndex = 0
+        var startStringIndex = 0
+        var endStringIndex = 0
+        var targetFinger : Finger? = null
+        val currentChord = currentSong.chords[currentChordIndex]
+        while(stringIndex < 6) {
+            val currentFinger = currentChord.strings[stringIndex].keys[fret]
+            if(currentFinger != null) {//in case if current finger exists
+                if(currentFinger == targetFinger) {//longBar continues
+                    endStringIndex = stringIndex
+                } else {//check for new longBar and start new longBar
+                    if(endStringIndex - startStringIndex > 0 && targetFinger != null) {
+                        createLongBar(fret, startStringIndex, endStringIndex, targetFinger)
+                    }
+                    startStringIndex = stringIndex
+                    endStringIndex = stringIndex
+                    targetFinger = currentFinger
+                }
+                stringIndex++
+            } else {//in case if current finger doesn't exist
+                if(endStringIndex - startStringIndex > 0 && targetFinger != null) {
+                    createLongBar(fret, startStringIndex, endStringIndex, targetFinger)
+                }
+                stringIndex++
+                startStringIndex = stringIndex
+                endStringIndex = stringIndex
+                targetFinger = null
+            }
+        }
+        //at the end
+        if(endStringIndex - startStringIndex > 0 && targetFinger != null) {
+            createLongBar(fret, startStringIndex, endStringIndex, targetFinger)
+        }
+    }
+
+    fun clearFretLongBars(fret: Int) {
+        val layout = findViewById<ConstraintLayout>(R.id.editScreen)
+        while(longBars[fret].size > 0) {
+            layout.removeView(longBars[fret].removeAt(0))
+        }
+    }
+
+    fun createLongBar(fret: Int, startString: Int, endString: Int, finger: Finger) {
+        val longBar = TextView(this)
+        val startingButton = fretButtons[startString][fret]
+        val endingButton = fretButtons[endString][fret]
+        longBar.layoutParams = ConstraintLayout.LayoutParams(startingButton.width, (endingButton.y - startingButton.y + startingButton.height).toInt())
+        longBar.x = startingButton.x
+        longBar.y = startingButton.y
+        longBar.text = convertFingerEnumToString(finger)
+        longBar.gravity = Gravity.CENTER
+        longBar.elevation = 10F
+        longBar.setTextColor(ContextCompat.getColor(this, R.color.white))
+        val layout = findViewById<ConstraintLayout>(R.id.editScreen)
+        longBar.background = ContextCompat.getDrawable(this, R.drawable.finger_bar)
+        longBars[fret].add(longBar)
+        layout?.addView(longBar)
     }
 
     fun setFretNum(startingFret: Int) {

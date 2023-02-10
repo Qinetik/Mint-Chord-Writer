@@ -1,24 +1,14 @@
 package com.example.mint_chord_writer
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.nuri_chord_writer.DataStoreManager
-import androidx.lifecycle.viewModelScope
 import com.example.mint_chord_writer.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,7 +17,6 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.collections.LinkedHashMap
 
 class MainActivity : AppCompatActivity() {
     private var songList = ArrayList<Song>()
@@ -74,30 +63,41 @@ class MainActivity : AppCompatActivity() {
 
     private fun prepareSongs() {
         lifecycleScope.launch {
-            delay(100)
-            Log.d("aaa", "getting value from Main")
-            var stringifiedSongIds = dataStoreManager.getSongIds()
-            if(stringifiedSongIds != "null") {
-                Log.d("aaa", stringifiedSongIds)
-                val arr = JSONArray(stringifiedSongIds)
-                var sameTitleCount = HashMap<String, Int>()
-                for (i in 0 until arr.length()) {
-                    val songId = arr.get(i).toString()
-                    Log.d("aaa", songId)
-                    val songData = JSONObject(dataStoreManager.read(songId).toString())
-                    Log.d("aaa", songData.toString())
-                    var song = prepareSongData(songId, songData)
-                    if (sameTitleCount[song.name] == null) {
-                        sameTitleCount[song.name] = 0
-                    } else {
-                        sameTitleCount[song.name] = sameTitleCount[song.name]!! + 1
-                        song.name += "-" + sameTitleCount[song.name]
+            try {
+                delay(100)
+                Log.d("aaa", "getting value from Main")
+                var stringifiedSongIds = dataStoreManager.getSongIds()
+                if (stringifiedSongIds != "null") {
+                    Log.d("aaa", stringifiedSongIds)
+                    val arr = JSONArray(stringifiedSongIds)
+                    var sameTitleCount = HashMap<String, Int>()
+                    var i = 0
+                    while(i < arr.length()) {
+                        val songId = arr.get(i).toString()
+                        Log.d("aaa", songId)
+                        if (dataStoreManager.read(songId).toString() != "null") {
+                            val songData = JSONObject(dataStoreManager.read(songId).toString())
+                            Log.d("aaa", songData.toString())
+                            var song = prepareSongData(songId, songData)
+                            if (sameTitleCount[song.name] == null) {
+                                sameTitleCount[song.name] = 0
+                            } else {
+                                sameTitleCount[song.name] = sameTitleCount[song.name]!! + 1
+                                song.name += "-" + sameTitleCount[song.name]
+                            }
+                            songList.add(song)
+                            i++
+                        } else {
+                            arr.remove(i)
+                        }
                     }
-                    songList.add(song)
+                    dataStoreManager.save("song_ids", arr.toString())
+                    Log.d("aaa", arr.toString())
+                    //update the UI
+                    mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
                 }
-                Log.d("aaa", songList.size.toString())
-                //update the UI
-                mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
+            } catch (e: java.lang.Exception) {
+                Log.d("aaa", e.toString())
             }
         }
     }
@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity() {
             val chord = Chord()
             val jsonChord = JSONObject(jsonChords[i].toString())
             chord.name = jsonChord.get("name").toString()
+            chord.startingFret = jsonChord.get("startingFret") as Int
             val jsonStrings = JSONArray(jsonChord.get("strings").toString())
             for(j in 0 until jsonStrings.length()) {
                 val jsonString = JSONObject(jsonStrings[j].toString())

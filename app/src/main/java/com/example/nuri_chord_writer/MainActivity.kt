@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nuri_chord_writer.DataStoreManager
 import com.example.mint_chord_writer.databinding.ActivityMainBinding
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -17,12 +18,14 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private var songList = ArrayList<Song>()
     private lateinit var songsAdapter: SongsAdapter
     private lateinit var dataStoreManager: DataStoreManager
     private lateinit var mainActivityBinding: ActivityMainBinding
+    private var processing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
@@ -50,14 +53,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        super.onPause()
         lifecycleScope.launch {
-            Log.d("aaa", "mainActivity onPause")
             val songIds = JSONArray()
             for(i in songList) {
                 songIds.put(i.id)
             }
-            dataStoreManager.save("song_ids", songIds.toString())
+            val process = async {dataStoreManager.save("song_ids", songIds.toString())}
+            process.await()
+            Log.d("aaa", "saving song_ids")
+        }
+        super.onPause()
+    }
+
+    override fun onBackPressed() {
+        if(!processing) {
+            finishAffinity()
+            finish()
         }
     }
 
@@ -91,7 +102,10 @@ class MainActivity : AppCompatActivity() {
                             arr.remove(i)
                         }
                     }
-                    dataStoreManager.save("song_ids", arr.toString())
+                    processing = true
+                    val saveProcess = async { dataStoreManager.save("song_ids", arr.toString()) }
+                    saveProcess.await()
+                    processing = false
                     Log.d("aaa", arr.toString())
                     //update the UI
                     mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
@@ -140,7 +154,12 @@ class MainActivity : AppCompatActivity() {
         Log.d("aaa", "song removed: $position by $songId")
         mainActivityBinding.mainSongList.adapter?.notifyDataSetChanged()
         lifecycleScope.launch{
-            dataStoreManager.remove(songId)
+            processing = true
+            Log.d("aaa", "delete started")
+            val saveProcess = async {dataStoreManager.remove(songId)}
+            saveProcess.await()
+            processing = false
+            Log.d("aaa", "delete ended")
         }
     }
 }

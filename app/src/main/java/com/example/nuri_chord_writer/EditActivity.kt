@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mint_chord_writer.databinding.ActivityEditBinding
 import com.example.nuri_chord_writer.DataStoreManager
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -35,6 +36,7 @@ class EditActivity : AppCompatActivity() {
     private lateinit var dataStoreManager: DataStoreManager
     private var longBars = arrayOf(ArrayList<View>(), ArrayList<View>(), ArrayList<View>(),
         ArrayList<View>(), ArrayList<View>(), ArrayList<View>())//key is fret #
+    private var manualExit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -43,6 +45,7 @@ class EditActivity : AppCompatActivity() {
         setContentView(editActivityBinding.root)
 
         dataStoreManager = DataStoreManager(this)
+        manualExit = false
 
         //hide navigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -131,14 +134,13 @@ class EditActivity : AppCompatActivity() {
         )
 
         val layout = findViewById<ConstraintLayout>(R.id.editScreen)
-        layout.post({
-            applyCurrentSong()
-        })
-        //applyCurrentSong()
+        layout.post { applyCurrentSong() }
     }
 
     override fun onPause() {
-        saveCurrentWork()
+        if(!manualExit) {
+            saveCurrentWork()
+        }
         super.onPause()
     }
 
@@ -149,7 +151,6 @@ class EditActivity : AppCompatActivity() {
             Log.d("aaa", currentSong.id)
             Log.d("aaa", currentSong.getJson().toString())
             dataStoreManager.save(currentSong.id, currentSong.getJson().toString())
-            Log.d("aaa", "saving here")
         }
     }
 
@@ -160,11 +161,16 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun goHome(view: View) {
-        val data = Intent()
-        data.putExtra("editedSong", currentSong)
-        setResult(Activity.RESULT_OK, data)
-        finish()
+        currentSong.name = editActivityBinding.songTitle.text.toString()
+        lifecycleScope.launch {
+            val saveSong = async { dataStoreManager.save(currentSong.id, currentSong.getJson().toString()) }
+            saveSong.await()
+            Log.d("aaa", "manual save completed")
+            manualExit = true
+            finish()
+        }
     }
+
 
     fun addNewChord(view: View) {
         Log.d("aaa", "addNewChord")
@@ -242,8 +248,7 @@ class EditActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        println("back press")
-        finish()
+        //don't call super.onBackPressed()
     }
 
     override fun onDestroy() {

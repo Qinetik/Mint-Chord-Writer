@@ -8,11 +8,11 @@ data class Song(var name: String, var capo: Int = 0, var id: String) : Serializa
     var chords: ArrayList<Chord> = arrayListOf<Chord>()
 
     init {
-        chords.add(Chord())
+        chords.add(Chord(""))
     }
 
     fun addNewChord(index: Int) {
-        this.chords.add(index, Chord())
+        this.chords.add(index, Chord(""))
     }
 
     fun removeChord(index: Int) {

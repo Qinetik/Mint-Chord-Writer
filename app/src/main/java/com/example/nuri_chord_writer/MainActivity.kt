@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             if (i >= song.chords.size) {
                 song.addNewChord(song.chords.size)
             }
-            val chord = Chord()
+            val chord = Chord("")
             val jsonChord = JSONObject(jsonChords[i].toString())
             chord.name = jsonChord.get("name").toString()
             chord.startingFret = jsonChord.get("startingFret") as Int

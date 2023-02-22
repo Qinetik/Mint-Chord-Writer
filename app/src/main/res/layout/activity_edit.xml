@@ -170,6 +170,54 @@
         app:layout_constraintVertical_bias="0" />
 
     <ImageButton
+        android:id="@+id/copyButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/copy_icon"
+        android:scaleType="fitCenter"
+        android:onClick="onClickCopy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/addChordButton"
+        app:layout_constraintTop_toBottomOf="@+id/addChordButton"
+        app:layout_constraintVertical_bias="0" />
+
+    <ImageButton
+        android:id="@+id/cutButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/cut_icon"
+        android:scaleType="fitCenter"
+        android:onClick="onClickCut"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/copyButton"
+        app:layout_constraintTop_toBottomOf="@+id/addChordButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/pasteButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/paste_icon"
+        android:scaleType="fitCenter"
+        android:onClick="onClickPaste"
+        android:alpha="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/cutButton"
+        app:layout_constraintTop_toBottomOf="@+id/addChordButton"
+        app:layout_constraintVertical_bias="0" />
+
+
+
+    <ImageButton
         android:id="@+id/prevChordButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -873,6 +921,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:orientation="vertical"

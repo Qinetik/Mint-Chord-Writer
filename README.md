@@ -34,6 +34,6 @@ P2
 ~~3-4. Multiple Vertical Keys show as one single key~~  
 
 P3 
-4-1. Copy & Paste option for each chord.  
+~~4-1. Copy & Paste option for each chord.~~  
 4-2. (Optional) Play, Pause, go back to 1st.  
 4-3. (Optional) Play the chord sound  

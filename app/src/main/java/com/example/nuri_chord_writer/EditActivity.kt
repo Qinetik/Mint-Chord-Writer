@@ -37,6 +37,8 @@ class EditActivity : AppCompatActivity() {
     private var longBars = arrayOf(ArrayList<View>(), ArrayList<View>(), ArrayList<View>(),
         ArrayList<View>(), ArrayList<View>(), ArrayList<View>())//key is fret #
     private var manualExit = false
+    private var copyChord : Chord? = null
+    var cutIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -63,15 +65,12 @@ class EditActivity : AppCompatActivity() {
 
         editActivityBinding.chordTitle.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                Log.d("aaa", "afterChange")
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.d("aaa", "preChange")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("aaa", "onChange")
                 currentSong.chords[currentChordIndex].name = s.toString()
                 updateChordListView(currentChordIndex, s.toString(), false)
             }
@@ -156,8 +155,7 @@ class EditActivity : AppCompatActivity() {
 
     fun applyCurrentSong() {
         prepareChordArrays()
-        renderChordNum()
-        renderChordTitle()
+        render()
     }
 
     fun goHome(view: View) {
@@ -171,14 +169,12 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-
     fun addNewChord(view: View) {
         Log.d("aaa", "addNewChord")
         currentSong.addNewChord(currentChordIndex+1)
         updateChordListView(currentChordIndex, null, false)
         currentChordIndex++
-        renderChordNum()
-        renderChordTitle()
+        render()
     }
 
     fun deleteCurrentChord(view: View) {
@@ -188,8 +184,7 @@ class EditActivity : AppCompatActivity() {
             if(currentChordIndex > 0)
                 currentChordIndex--
             updateChordListView(currentChordIndex, null, true)
-            renderChordNum()
-            renderChordTitle()
+            render()
         }
     }
 
@@ -214,6 +209,11 @@ class EditActivity : AppCompatActivity() {
         editActivityBinding.chordListView.adapter?.notifyDataSetChanged()
     }
 
+    fun render() {
+        renderChordNum()
+        renderChordTitle()
+    }
+
     fun renderChordTitle() {
         val chordTitle: TextView = findViewById(R.id.chordTitle)
         chordTitle.text = currentSong?.chords[currentChordIndex].name
@@ -221,30 +221,27 @@ class EditActivity : AppCompatActivity() {
 
     fun renderChordNum() {
         editActivityBinding.chordNum.text = (currentChordIndex + 1).toString() + "/" + currentSong?.chords?.size
-        Log.d("aaa", editActivityBinding.chordNum.text as String)
+        //Log.d("aaa", editActivityBinding.chordNum.text as String)
         loadChord()
     }
 
     fun movePrevChord(view: View) {
         if(currentChordIndex > 0) {
             currentChordIndex--
-            renderChordNum()
-            renderChordTitle()
+            render()
         }
     }
 
     fun moveNextChord(view: View) {
         if(currentChordIndex < currentSong?.chords?.size-1) {
             currentChordIndex++
-            renderChordNum()
-            renderChordTitle()
+            render()
         }
     }
 
     fun moveToChord(index: Int) {
         currentChordIndex = index
-        renderChordNum()
-        renderChordTitle()
+        render()
     }
 
     override fun onBackPressed() {
@@ -254,6 +251,54 @@ class EditActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         println("destroyed")
+    }
+
+    fun onClickCopy(view: View) {
+        copyChord = currentSong.chords[currentChordIndex].copy()
+        cutIndex = -1
+        Log.d("aaa", copyChord!!.getJson().toString())
+        updatePasteButton(true)
+    }
+
+    fun onClickCut(view: View) {
+        cutIndex = currentChordIndex
+        copyChord = null
+        updatePasteButton(true)
+        editActivityBinding.chordListView.adapter?.notifyDataSetChanged()
+    }
+
+    fun onClickPaste(view: View) {
+        if(cutIndex != -1) {
+            if(cutIndex != currentChordIndex) {
+                val cutChord = currentSong.chords.removeAt(cutIndex)
+                val cutChordCard = chordCardList.removeAt(cutIndex)
+                if (currentSong.chords.size <= currentChordIndex + 1) {
+                    currentChordIndex--
+                }
+                currentSong.chords[currentChordIndex] = cutChord
+                chordCardList[currentChordIndex] = cutChordCard
+            }
+            cutIndex = -1
+            updatePasteButton(false)
+            render()
+        } else {
+            if(copyChord != null) {
+                currentSong.chords.add(currentChordIndex+1, copyChord!!)
+                updateChordListView(currentChordIndex, null, false)
+                currentChordIndex++
+                Log.d("aaa", currentSong.getJson().toString())
+                render()
+            }
+        }
+    }
+
+    fun updatePasteButton(isEnable: Boolean) {
+        val pasteButton = findViewById<ImageButton>(R.id.pasteButton)
+        if(isEnable) {
+            pasteButton.alpha = 1F
+        } else {
+            pasteButton.alpha = 0.5F
+        }
     }
 
     fun fretClick(view: View) {
@@ -269,6 +314,11 @@ class EditActivity : AppCompatActivity() {
             view.alpha = 1.0F
             currentSong.chords[currentChordIndex].setGStringByIndex(getGstringIndex(position), getGstringFret(position), currentFinger)
             handleLongBar(getGstringFret(position))
+        }
+
+        if(cutIndex == currentChordIndex && copyChord == null) {
+            cutIndex = -1
+            updatePasteButton(false)
         }
     }
 
@@ -286,8 +336,6 @@ class EditActivity : AppCompatActivity() {
         }
         val currentChord = currentSong.chords[currentChordIndex]
         editActivityBinding.fretNumButton.setText(convertStartFretNumToTitle(currentChord.startingFret))
-        Log.d("aaa", currentChord.startingFret.toString())
-        Log.d("aaa", convertStartFretNumToTitle(currentChord.startingFret))
         for(i in 0..5) {
             for(button in fretButtons[i]) {
                 //buttonTag ex: "01"

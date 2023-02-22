@@ -5,10 +5,9 @@ import org.json.JSONObject
 import java.io.Serializable
 
 
-class GString(mute: Boolean) : Serializable {
+data class GString(var mute: Boolean) : Serializable {
     //if keys Int Finger
     var keys: LinkedHashMap<Int, Finger> = LinkedHashMap<Int, Finger>()
-    var mute: Boolean = mute
 
     fun getJson():JSONObject {
         val json = JSONObject()
@@ -23,5 +22,11 @@ class GString(mute: Boolean) : Serializable {
 
     override fun toString(): String {
         return getJson().toString()
+    }
+
+    fun copy() : GString {
+        var copy = GString(this.mute)
+        copy.keys = LinkedHashMap(this.keys)
+        return copy
     }
 }

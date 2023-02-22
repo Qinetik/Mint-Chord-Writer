@@ -5,10 +5,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
 
-class Chord() : Serializable {
+data class Chord(var name: String) : Serializable {
     var strings: Array<GString> = arrayOf(GString(false), GString(false), GString(false), GString(false), GString(false), GString(false))
     var startingFret: Int = 0
-    var name: String = ""
 
     fun setGStringByIndex(index: Int, fret: Int, finger: Finger) {
         strings[index].keys[fret] = finger
@@ -28,6 +27,15 @@ class Chord() : Serializable {
         json.put("startingFret", this.startingFret)
         json.put("strings", JSONArray(this.strings.map{ it.getJson() }))
         return json
+    }
+
+    fun copy(): Chord {
+        var copy = Chord(name)
+        copy.startingFret = startingFret
+        for(i in 0 .. 5) {
+            copy.strings[i] = strings[i].copy()
+        }
+        return copy
     }
 
 }

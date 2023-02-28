@@ -2,7 +2,7 @@
  An android app for writing guitar chords
 
 
-Use cases (12/7/2022
+Use cases (12/7/2022)
 P1
 ***Main Menu***  
 ~~1-1. Title~~  
@@ -30,10 +30,10 @@ P1
 P2  
 3-1. Beautify UI  
 3-2. Apply Icon  
-3-3. Support multiple keys in single string  
-3-4. Multiple Vertical Keys show as one single key  
+~~3-3. Support multiple keys in single string~~  
+~~3-4. Multiple Vertical Keys show as one single key~~  
 
 P3 
-4-1. Copy & Paste option for each chord.  
+~~4-1. Copy & Paste option for each chord.~~  
 4-2. (Optional) Play, Pause, go back to 1st.  
 4-3. (Optional) Play the chord sound  

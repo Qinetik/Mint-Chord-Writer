@@ -2,7 +2,7 @@
  An android app for writing guitar chords
 
 
-Use cases (12/7/2022
+Use cases (12/7/2022)
 P1
 ***Main Menu***  
 ~~1-1. Title~~  
